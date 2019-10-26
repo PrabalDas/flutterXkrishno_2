@@ -1,6 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:http/http.dart';
-
 
 enum WeatherCondition {
   snow,
@@ -15,6 +13,7 @@ enum WeatherCondition {
   clear,
   unknown
 }
+
 class Weather extends Equatable {
   final WeatherCondition condition;
   final String formattedCondition;
@@ -26,12 +25,32 @@ class Weather extends Equatable {
   final DateTime lastUpdated;
   final String location;
 
+  const Weather({
+    this.condition,
+    this.formattedCondition,
+    this.minTemp,
+    this.temp,
+    this.maxTemp,
+    this.locationId,
+    this.created,
+    this.lastUpdated,
+    this.location,
+  });
 
   @override
-  
-  List<Object> get props => [condition,formattedCondition,minTemp,temp,maxTemp,locationId,created,lastUpdated,location];
+  List<Object> get props => [
+        condition,
+        formattedCondition,
+        minTemp,
+        temp,
+        maxTemp,
+        locationId,
+        created,
+        lastUpdated,
+        location,
+      ];
 
- static Weather fromJson(dynamic json) {
+  static Weather fromJson(dynamic json) {
     final consolidatedWeather = json['consolidated_weather'][0];
     return Weather(
       condition: _mapStringToWeatherCondition(
@@ -45,9 +64,7 @@ class Weather extends Equatable {
       lastUpdated: DateTime.now(),
       location: json['title'],
     );
- }
-    const Weather(this.condition, this.formattedCondition, this.minTemp, this.temp, this.maxTemp, this.locationId, this.created, this.lastUpdated, this.location);
- 
+  }
 
   static WeatherCondition _mapStringToWeatherCondition(String input) {
     WeatherCondition state;
@@ -87,6 +104,4 @@ class Weather extends Equatable {
     }
     return state;
   }
-  
 }
-
